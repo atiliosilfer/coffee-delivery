@@ -1,3 +1,5 @@
-export function Home () {
-  return <div>Home</div>
+import { HomeHeader } from './components/HomeHeader'
+
+export function Home() {
+  return <HomeHeader />
 }

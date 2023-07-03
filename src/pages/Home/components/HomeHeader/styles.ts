@@ -26,7 +26,7 @@ export const HomeHeaderContainer = styled.header`
 
   @media (max-width: 768px) {
     img {
-      display: none;
+      display: none !important;
       visibility: hidden;
     }
   }

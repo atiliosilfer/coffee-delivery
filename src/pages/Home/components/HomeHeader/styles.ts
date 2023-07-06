@@ -8,7 +8,6 @@ export const HomeHeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5.75rem;
 
   h1 {
     color: ${(props) => props.theme['base-title']};

@@ -9,9 +9,14 @@ export const CoffeeMenuTitle = styled.h2`
 `
 
 export const ContainerCoffeeMenu = styled.div`
-  display: flex;
-  flex-flow: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 1180px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
 `

@@ -11,6 +11,7 @@ export const HeaderContainer = styled.header`
     justify-content: flex-end;
     align-items: center;
     gap: 0.75rem;
+    padding: 1rem;
 
     a {
       width: 2.375rem;

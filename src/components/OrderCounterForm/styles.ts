@@ -6,6 +6,7 @@ export const FormContainer = styled.form`
   padding: 0.5rem;
   border-radius: 0.375rem;
   background-color: ${(props) => props.theme['base-button']};
+  width: min-content;
 
   button {
     border: none;

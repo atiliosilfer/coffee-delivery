@@ -1,8 +1,6 @@
-import { Trash } from 'phosphor-react'
-import coffeImage from '../../assets/coffees/expresso-americano.png'
-import { OrderCounterForm } from '../../components/OrderCounterForm'
-import { CardContainer, GridContainer } from './styles'
+import { BillContainer, CardContainer, GridContainer } from './styles'
 import { FormCheckout } from './components/FormCheckout'
+import { CardItem } from './components/CardItem'
 
 export function Checkout() {
   return (
@@ -13,30 +11,27 @@ export function Checkout() {
         <h2>Cafés selecionados</h2>
 
         <CardContainer>
-          <div>
-            <div>
-              <img src={coffeImage} alt="imagem de cafe" />
-            </div>
-            <div>
-              <span>Expresso Tradicional</span>
-              <OrderCounterForm amount={1} onClick={() => console.log('aaa')} />
-              <button type="button">
-                <Trash size={32} />
-                Remover
-              </button>
-            </div>
-            <div>
-              <span>R$ 9,90</span>
-            </div>
-          </div>
+          <CardItem />
+          <CardItem />
 
-          <div>
-            <span>Total de itens: R$ 29,70</span>
-            <span>Entrega: R$ 3,50</span>
-            <span>Total: R$ 33,20</span>
-          </div>
+          <BillContainer>
+            <div>
+              <span>Total de itens</span>
+              <span>R$ 29,70</span>
+            </div>
 
-          <button type="submit">confirmar pedido</button>
+            <div>
+              <span>Entrega </span>
+              <span>R$ 3,50</span>
+            </div>
+
+            <div>
+              <span>Total </span>
+              <span>R$ 33,20</span>
+            </div>
+
+            <button type="submit">CONFIRMAR PEDIDO</button>
+          </BillContainer>
         </CardContainer>
       </div>
     </GridContainer>

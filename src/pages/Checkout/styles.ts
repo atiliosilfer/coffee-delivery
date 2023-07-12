@@ -62,5 +62,10 @@ export const BillContainer = styled.div`
     font-size: 0.875rem;
     font-weight: 700;
     line-height: 160%;
+
+    :hover {
+      cursor: pointer;
+      background-color: ${(props) => props.theme['yellow-dark']};
+    }
   }
 `

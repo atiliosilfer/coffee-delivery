@@ -1,11 +1,39 @@
 import { BillContainer, CardContainer, GridContainer } from './styles'
-import { FormCheckout } from './components/FormCheckout'
+import { FormDelivery } from './components/FormDelivery'
 import { CardItem } from './components/CardItem'
+import * as zod from 'zod'
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+const deliveryFormValidationSchema = zod.object({
+  cep: zod.string().min(9, 'Informe o CEP.').max(9, 'Informe um CEP valido.'),
+  street: zod.string().min(1, 'Informe a rua.'),
+  adressNumber: zod.string().min(0, 'Informe o número.'),
+  complement: zod.string().optional(),
+  neighborhood: zod.string().min(0, 'Informe o Bairro.'),
+  city: zod.string().min(0, 'Informe a cidade.'),
+  uf: zod.string().min(2, 'Informe a UF.').max(2, 'Informe uma UF valida.'),
+  paymentMethod: zod.string().min(1, 'Informe o método de pagamento.'),
+})
+
+type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
 
 export function Checkout() {
+  const deliveryForm = useForm<DeliveryFormData>({
+    resolver: zodResolver(deliveryFormValidationSchema),
+  })
+
+  const { handleSubmit } = deliveryForm
+
+  function handleConfirmOrder(data: DeliveryFormData) {
+    console.log(data)
+  }
+
   return (
-    <GridContainer>
-      <FormCheckout />
+    <GridContainer onSubmit={handleSubmit(handleConfirmOrder)}>
+      <FormProvider {...deliveryForm}>
+        <FormDelivery />
+      </FormProvider>
 
       <div>
         <h2>Cafés selecionados</h2>

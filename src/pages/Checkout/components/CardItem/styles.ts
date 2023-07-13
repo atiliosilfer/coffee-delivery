@@ -19,7 +19,7 @@ export const CardItemContainer = styled.div`
     font-weight: 700;
   }
 
-  div {
+  > div {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 0.5rem;

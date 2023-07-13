@@ -29,7 +29,7 @@ export const CardTitle = styled.div<CardTitleProps>`
   }
 `
 
-export const FormGrid = styled.form`
+export const FormGrid = styled.div`
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(12, 1fr);
@@ -40,7 +40,7 @@ interface FormGridItemProps {
   columnSize: number
 }
 
-export const FormGridItem = styled.form<FormGridItemProps>`
+export const FormGridItem = styled.div<FormGridItemProps>`
   grid-column-start: ${(props) => props.startColumn};
   grid-column-end: span ${(props) => props.columnSize};
 
@@ -50,6 +50,11 @@ export const FormGridItem = styled.form<FormGridItemProps>`
     border-radius: 0.25rem;
     background-color: ${(props) => props.theme['base-input']};
     border: 1px solid ${(props) => props.theme['base-button']};
+
+    &:focus {
+      border-color: ${(props) => props.theme['yellow-dark']};
+      outline: none;
+    }
   }
 `
 
@@ -62,11 +67,11 @@ export const PaymentOptionContainer = styled.div`
   }
 `
 
-interface PaymentOptionProps {
-  selected?: boolean
+interface PaymentOptionItemProps {
+  checked?: boolean
 }
 
-export const PaymentOption = styled.div<PaymentOptionProps>`
+export const PaymentOptionItem = styled.label<PaymentOptionItemProps>`
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -74,12 +79,11 @@ export const PaymentOption = styled.div<PaymentOptionProps>`
   flex-basis: 32%;
   font-size: 0.75rem;
   border-radius: 6px;
-  background-color: ${(props) =>
-    props.selected ? props.theme['purple-light'] : props.theme['base-button']};
-  border: 1px;
-  border-style: solid;
-  border-color: ${(props) =>
-    props.selected ? props.theme.purple : 'transparent'};
+  background-color: ${(props) => props.theme['base-button']};
+
+  input {
+    display: none;
+  }
 
   svg {
     color: ${(props) => props.theme.purple};
@@ -89,4 +93,13 @@ export const PaymentOption = styled.div<PaymentOptionProps>`
     background-color: ${(props) => props.theme['base-hover']};
     cursor: pointer;
   }
+
+  ${({ checked, theme }) => checked && inputChecked(theme)}
 `
+
+const inputChecked = (theme: any) => `
+  border: 1px;
+  border-style: solid;
+  background-color: ${theme['purple-light']};
+  border-color: ${theme.purple};
+  `

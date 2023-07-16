@@ -25,6 +25,8 @@ export function FormDelivery() {
   } = useFormContext()
   const paymentMethod = watch('paymentMethod')
 
+  console.log(errors)
+
   return (
     <div>
       <h2>Complete seu pedido</h2>

@@ -2,14 +2,14 @@ import { OrderCounterForm } from '../../../../components/OrderCounterForm'
 import { CardItemContainer } from './styles'
 import { Trash } from 'phosphor-react'
 import { useContext, useState } from 'react'
-import { CartContext, Order } from '../../../../contexts/CartContext'
+import { OrderContext, Order } from '../../../../contexts/OrderContext'
 
 interface CartItemProps {
   order: Order
 }
 
 export function CartItem({ order }: CartItemProps) {
-  const { addCartItem, removeCartItem } = useContext(CartContext)
+  const { addCartItem, removeCartItem } = useContext(OrderContext)
   const { id, name, amount, unitValue, image } = order
   const [coffeAmount, setCoffeeAmount] = useState(amount)
 

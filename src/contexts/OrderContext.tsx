@@ -8,19 +8,19 @@ export interface Order {
   image: string
 }
 
-interface CartContextType {
+interface OrderContextType {
   cartItens: Order[]
   addCartItem: (order: Order) => void
   removeCartItem: (id: number) => void
 }
 
-export const CartContext = createContext({} as CartContextType)
+export const OrderContext = createContext({} as OrderContextType)
 
-interface CartContextProviderProps {
+interface OrderContextProviderProps {
   children: ReactNode
 }
 
-export function CartContextProvider({ children }: CartContextProviderProps) {
+export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const storedStateAsJSON = localStorage.getItem(
     '@coffee-delivery:cart-itens-1.0.0',
   )
@@ -58,7 +58,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   return (
-    <CartContext.Provider
+    <OrderContext.Provider
       value={{
         cartItens,
         addCartItem,
@@ -66,6 +66,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       }}
     >
       {children}
-    </CartContext.Provider>
+    </OrderContext.Provider>
   )
 }

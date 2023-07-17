@@ -5,7 +5,7 @@ import * as zod from 'zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useContext } from 'react'
-import { CartContext } from '../../contexts/CartContext'
+import { OrderContext } from '../../contexts/OrderContext'
 import { toast } from 'react-toastify'
 
 const deliveryFormValidationSchema = zod.object({
@@ -33,7 +33,7 @@ const deliveryFormValidationSchema = zod.object({
 type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
 
 export function Checkout() {
-  const { cartItens } = useContext(CartContext)
+  const { cartItens } = useContext(OrderContext)
   const deliveryForm = useForm<DeliveryFormData>({
     resolver: zodResolver(deliveryFormValidationSchema),
   })

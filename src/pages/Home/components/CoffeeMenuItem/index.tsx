@@ -8,7 +8,7 @@ import {
 import { OrderCounterForm } from '../../../../components/OrderCounterForm'
 import { ShoppingCart } from 'phosphor-react'
 import { CoffeeMenuItemType } from '../../../../service/mocks/coffeMenu'
-import { CartContext } from '../../../../contexts/CartContext'
+import { OrderContext } from '../../../../contexts/OrderContext'
 
 interface CoffeeMenuItemProps {
   menu: CoffeeMenuItemType
@@ -16,7 +16,7 @@ interface CoffeeMenuItemProps {
 
 export function CoffeeMenuItem({ menu }: CoffeeMenuItemProps) {
   const { image, name, description, type, value, id } = menu
-  const { addCartItem } = useContext(CartContext)
+  const { addCartItem } = useContext(OrderContext)
   const [amount, setAmount] = useState(1)
 
   function onClickChangeOrderAmount(newAmount: number) {

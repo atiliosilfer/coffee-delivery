@@ -6,16 +6,28 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/CartContext'
+import { toast } from 'react-toastify'
 
 const deliveryFormValidationSchema = zod.object({
-  cep: zod.string().min(9, 'Informe o CEP.').max(9, 'Informe um CEP valido.'),
-  street: zod.string().min(1, 'Informe a rua.'),
+  cep: zod
+    .string()
+    .min(9, 'Informe um CEP valido.')
+    .max(9, 'Informe um CEP valido.'),
+  street: zod.string().min(0, 'Informe a rua.'),
   adressNumber: zod.string().min(0, 'Informe o número.'),
   complement: zod.string().optional(),
   neighborhood: zod.string().min(0, 'Informe o Bairro.'),
   city: zod.string().min(0, 'Informe a cidade.'),
-  uf: zod.string().min(2, 'Informe a UF.').max(2, 'Informe uma UF valida.'),
-  paymentMethod: zod.string().min(1, 'Informe o método de pagamento.'),
+  uf: zod
+    .string()
+    .min(2, 'Informe uma UF valida.')
+    .max(2, 'Informe uma UF valida.'),
+  paymentMethod: zod
+    .string({
+      required_error: 'Informe o método de pagamento.',
+      invalid_type_error: 'Informe o método de pagamento.',
+    })
+    .min(0, 'Informe o método de pagamento.'),
 })
 
 type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
@@ -26,14 +38,25 @@ export function Checkout() {
     resolver: zodResolver(deliveryFormValidationSchema),
   })
 
-  const { handleSubmit } = deliveryForm
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = deliveryForm
 
   function handleConfirmOrder(data: DeliveryFormData) {
     console.log(data)
   }
 
+  function handleConfirmWithError() {
+    Object.keys(errors).forEach((key: string) => {
+      toast.error((errors as any)[key].message)
+    })
+  }
+
   return (
-    <GridContainer onSubmit={handleSubmit(handleConfirmOrder)}>
+    <GridContainer
+      onSubmit={handleSubmit(handleConfirmOrder, handleConfirmWithError)}
+    >
       <FormProvider {...deliveryForm}>
         <FormDelivery />
       </FormProvider>

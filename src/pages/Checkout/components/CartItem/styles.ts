@@ -46,6 +46,11 @@ export const CardItemContainer = styled.div`
       svg {
         color: ${(props) => props.theme.purple};
       }
+
+      :hover {
+        background-color: ${(props) => props.theme['base-hover']};
+        cursor: pointer;
+      }
     }
   }
 `

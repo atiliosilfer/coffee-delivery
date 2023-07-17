@@ -18,14 +18,8 @@ import {
 import { useFormContext } from 'react-hook-form'
 
 export function FormDelivery() {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useFormContext()
+  const { register, watch } = useFormContext()
   const paymentMethod = watch('paymentMethod')
-
-  console.log(errors)
 
   return (
     <div>
@@ -42,6 +36,7 @@ export function FormDelivery() {
         <FormGrid>
           <FormGridItem startColumn={1} columnSize={4}>
             <InputMask
+              maskChar={null}
               id="cep"
               mask="99999-999"
               type="text"
@@ -64,6 +59,7 @@ export function FormDelivery() {
               id="adressNumber"
               type="number"
               placeholder="Número"
+              required
               {...register('adressNumber')}
             />
           </FormGridItem>

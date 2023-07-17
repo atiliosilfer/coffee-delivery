@@ -26,9 +26,10 @@ export function CoffeeMenuItem({ menu }: CoffeeMenuItemProps) {
   function handleAddOrder() {
     addCartItem({
       amount,
-      description,
+      name,
       id,
       unitValue: value,
+      image,
     })
   }
 

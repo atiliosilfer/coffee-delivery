@@ -1,9 +1,11 @@
 import { BillContainer, CardContainer, GridContainer } from './styles'
 import { FormDelivery } from './components/FormDelivery'
-import { CardItem } from './components/CardItem'
+import { CartItem } from './components/CartItem'
 import * as zod from 'zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useContext } from 'react'
+import { CartContext } from '../../contexts/CartContext'
 
 const deliveryFormValidationSchema = zod.object({
   cep: zod.string().min(9, 'Informe o CEP.').max(9, 'Informe um CEP valido.'),
@@ -19,6 +21,7 @@ const deliveryFormValidationSchema = zod.object({
 type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
 
 export function Checkout() {
+  const { cartItens } = useContext(CartContext)
   const deliveryForm = useForm<DeliveryFormData>({
     resolver: zodResolver(deliveryFormValidationSchema),
   })
@@ -39,8 +42,9 @@ export function Checkout() {
         <h2>Cafés selecionados</h2>
 
         <CardContainer>
-          <CardItem />
-          <CardItem />
+          {cartItens.map((item) => (
+            <CartItem key={item.id} order={item} />
+          ))}
 
           <BillContainer>
             <div>

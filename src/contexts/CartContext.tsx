@@ -1,10 +1,11 @@
 import { ReactNode, createContext, useEffect, useState } from 'react'
 
-interface Order {
+export interface Order {
   id: number
-  description: string
+  name: string
   amount: number
   unitValue: number
+  image: string
 }
 
 interface CartContextType {
@@ -20,7 +21,13 @@ interface CartContextProviderProps {
 }
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const [cartItens, setCartItens] = useState<Order[]>([])
+  const storedStateAsJSON = localStorage.getItem(
+    '@coffee-delivery:cart-itens-1.0.0',
+  )
+
+  const [cartItens, setCartItens] = useState<Order[]>(
+    storedStateAsJSON ? JSON.parse(storedStateAsJSON) : [],
+  )
 
   useEffect(() => {
     const stateJSON = JSON.stringify(cartItens)

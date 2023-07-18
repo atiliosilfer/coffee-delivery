@@ -33,7 +33,7 @@ const deliveryFormValidationSchema = zod.object({
 type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
 
 export function Checkout() {
-  const { cartItens } = useContext(OrderContext)
+  const { cartItens, totalOrderValue } = useContext(OrderContext)
   const deliveryForm = useForm<DeliveryFormData>({
     resolver: zodResolver(deliveryFormValidationSchema),
   })
@@ -52,6 +52,8 @@ export function Checkout() {
       toast.error((errors as any)[key].message)
     })
   }
+
+  console.log(totalOrderValue)
 
   return (
     <GridContainer
@@ -72,7 +74,13 @@ export function Checkout() {
           <BillContainer>
             <div>
               <span>Total de itens</span>
-              <span>R$ 29,70</span>
+              <span>
+                R${' '}
+                {totalOrderValue.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
             </div>
 
             <div>
@@ -82,7 +90,13 @@ export function Checkout() {
 
             <div>
               <span>Total </span>
-              <span>R$ 33,20</span>
+              <span>
+                R${' '}
+                {(totalOrderValue + 3.5).toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
             </div>
 
             <button type="submit">CONFIRMAR PEDIDO</button>

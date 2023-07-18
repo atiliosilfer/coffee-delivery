@@ -12,6 +12,7 @@ interface OrderContextType {
   cartItens: Order[]
   addCartItem: (order: Order) => void
   removeCartItem: (id: number) => void
+  totalOrderValue: number
 }
 
 export const OrderContext = createContext({} as OrderContextType)
@@ -24,15 +25,16 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
   const storedStateAsJSON = localStorage.getItem(
     '@coffee-delivery:cart-itens-1.0.0',
   )
-
   const [cartItens, setCartItens] = useState<Order[]>(
     storedStateAsJSON ? JSON.parse(storedStateAsJSON) : [],
   )
+  const [totalOrderValue, setTotalOrderValue] = useState(
+    sumOrderValue(cartItens),
+  )
 
   useEffect(() => {
-    const stateJSON = JSON.stringify(cartItens)
-
-    localStorage.setItem('@coffee-delivery:cart-itens-1.0.0', stateJSON)
+    saveCartOnLocalStorage(cartItens)
+    setTotalOrderValue(sumOrderValue(cartItens))
   }, [cartItens])
 
   function addCartItem(newCoffeeOrder: Order) {
@@ -42,9 +44,11 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
 
     if (orderIndex >= 0) {
       const newCartItens = cartItens
-      newCartItens[orderIndex].amount += newCoffeeOrder.amount
+      newCartItens[orderIndex].amount = newCoffeeOrder.amount
 
       setCartItens(newCartItens)
+      saveCartOnLocalStorage(newCartItens)
+      setTotalOrderValue(sumOrderValue(newCartItens))
       return
     }
 
@@ -57,12 +61,26 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     setCartItens(filteredOrders)
   }
 
+  function saveCartOnLocalStorage(cart: Order[]) {
+    const stateJSON = JSON.stringify(cart)
+
+    localStorage.setItem('@coffee-delivery:cart-itens-1.0.0', stateJSON)
+  }
+
+  function sumOrderValue(cart: Order[]) {
+    return cart.reduce(
+      (accumulator, item) => accumulator + item.amount * item.unitValue,
+      0,
+    )
+  }
+
   return (
     <OrderContext.Provider
       value={{
         cartItens,
         addCartItem,
         removeCartItem,
+        totalOrderValue,
       }}
     >
       {children}

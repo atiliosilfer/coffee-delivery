@@ -40,7 +40,13 @@ export function CartItem({ order }: CartItemProps) {
         </button>
       </div>
 
-      <span>R$ {(unitValue * coffeAmount).toLocaleString('pt-BR')}</span>
+      <span>
+        R${' '}
+        {(unitValue * coffeAmount).toLocaleString('pt-BR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
+      </span>
     </CardItemContainer>
   )
 }

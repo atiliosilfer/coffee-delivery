@@ -8,6 +8,7 @@ import { useContext } from 'react'
 import { OrderContext } from '../../contexts/OrderContext'
 import { toast } from 'react-toastify'
 import { EmptyCart } from './components/EmptyCart'
+import { useNavigate } from 'react-router-dom'
 
 const deliveryFormValidationSchema = zod.object({
   cep: zod
@@ -31,13 +32,23 @@ const deliveryFormValidationSchema = zod.object({
     .min(0, 'Informe o método de pagamento.'),
 })
 
-type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
+export type DeliveryFormData = zod.infer<typeof deliveryFormValidationSchema>
 
 export function Checkout() {
-  const { cartItens, totalOrderValue } = useContext(OrderContext)
+  const {
+    cartItens,
+    totalOrderValue,
+    updateDeliveryData,
+    deliveryData,
+    clearCart,
+  } = useContext(OrderContext)
+
   const deliveryForm = useForm<DeliveryFormData>({
     resolver: zodResolver(deliveryFormValidationSchema),
+    defaultValues: deliveryData,
   })
+
+  const navigate = useNavigate()
 
   const {
     handleSubmit,
@@ -45,7 +56,9 @@ export function Checkout() {
   } = deliveryForm
 
   function handleConfirmOrder(data: DeliveryFormData) {
-    console.log(data)
+    updateDeliveryData(data)
+    clearCart()
+    navigate('/success')
   }
 
   function handleConfirmWithError() {

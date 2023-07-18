@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useEffect, useState } from 'react'
+import { DeliveryFormData } from '../pages/Checkout'
 
 export interface Order {
   id: number
@@ -12,7 +13,10 @@ interface OrderContextType {
   cartItens: Order[]
   addCartItem: (order: Order) => void
   removeCartItem: (id: number) => void
+  clearCart: () => void
   totalOrderValue: number
+  deliveryData: DeliveryFormData
+  updateDeliveryData: (data: DeliveryFormData) => void
 }
 
 export const OrderContext = createContext({} as OrderContextType)
@@ -22,11 +26,18 @@ interface OrderContextProviderProps {
 }
 
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
-  const storedStateAsJSON = localStorage.getItem(
+  const storedCartAsJSON = localStorage.getItem(
     '@coffee-delivery:cart-itens-1.0.0',
   )
+  const storedDeliveryDataAsJSON = localStorage.getItem(
+    '@coffee-delivery:delivery-data-1.0.0',
+  )
+
   const [cartItens, setCartItens] = useState<Order[]>(
-    storedStateAsJSON ? JSON.parse(storedStateAsJSON) : [],
+    storedCartAsJSON ? JSON.parse(storedCartAsJSON) : [],
+  )
+  const [deliveryData, setDeliveryData] = useState<DeliveryFormData>(
+    storedDeliveryDataAsJSON ? JSON.parse(storedDeliveryDataAsJSON) : [],
   )
   const [totalOrderValue, setTotalOrderValue] = useState(
     sumOrderValue(cartItens),
@@ -36,6 +47,13 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     saveCartOnLocalStorage(cartItens)
     setTotalOrderValue(sumOrderValue(cartItens))
   }, [cartItens])
+
+  function updateDeliveryData(data: DeliveryFormData) {
+    setDeliveryData(data)
+
+    const stateJSON = JSON.stringify(data)
+    localStorage.setItem('@coffee-delivery:delivery-data-1.0.0', stateJSON)
+  }
 
   function addCartItem(newCoffeeOrder: Order) {
     const orderIndex = cartItens.findIndex(
@@ -61,6 +79,10 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
     setCartItens(filteredOrders)
   }
 
+  function clearCart() {
+    setCartItens([])
+  }
+
   function saveCartOnLocalStorage(cart: Order[]) {
     const stateJSON = JSON.stringify(cart)
 
@@ -80,7 +102,10 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
         cartItens,
         addCartItem,
         removeCartItem,
+        clearCart,
         totalOrderValue,
+        deliveryData,
+        updateDeliveryData,
       }}
     >
       {children}

@@ -6,8 +6,14 @@ import {
   OrderResumeContainer,
   OrderResumeItem,
 } from './styles'
+import { useContext } from 'react'
+import { OrderContext } from '../../contexts/OrderContext'
 
 export function OrderConfirmation() {
+  const { deliveryData } = useContext(OrderContext)
+  const { street, adressNumber, neighborhood, city, uf, paymentMethod } =
+    deliveryData
+
   return (
     <OrderConfirmationContainer>
       <h1>Uhu! Pedido confirmado</h1>
@@ -22,9 +28,14 @@ export function OrderConfirmation() {
               </IconContainer>
               <div>
                 <p>
-                  Entrega em <strong>Rua João Daniel Martinelli, 102</strong>
+                  Entrega em{' '}
+                  <strong>
+                    {street}, {adressNumber}
+                  </strong>
                 </p>
-                <span>Farrapos - Porto Alegre, RS</span>
+                <span>
+                  {neighborhood} - {city}, {uf}
+                </span>
               </div>
             </OrderResumeItem>
             <OrderResumeItem>
@@ -43,7 +54,7 @@ export function OrderConfirmation() {
 
               <div>
                 <p>Pagamento na entrega </p>
-                <strong>Cartão de Crédito</strong>
+                <strong>{paymentMethod}</strong>
               </div>
             </OrderResumeItem>
           </div>

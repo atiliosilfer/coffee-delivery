@@ -113,26 +113,30 @@ export function FormDelivery() {
         </CardTitle>
 
         <PaymentOptionContainer>
-          <PaymentOptionItem checked={paymentMethod === 'credit-card'}>
+          <PaymentOptionItem checked={paymentMethod === 'Cartão de crédito'}>
             <input
               type="radio"
-              value="credit-card"
+              value="Cartão de crédito"
               {...register('paymentMethod')}
             />
             <CreditCard size={16} />
             CARTÃO DE CRÉDITO
           </PaymentOptionItem>
-          <PaymentOptionItem checked={paymentMethod === 'debit-card'}>
+          <PaymentOptionItem checked={paymentMethod === 'Cartão de débito'}>
             <input
               type="radio"
-              value="debit-card"
+              value="Cartão de débito"
               {...register('paymentMethod')}
             />
             <Bank size={16} />
             CARTÃO DE DÉBITO
           </PaymentOptionItem>
-          <PaymentOptionItem checked={paymentMethod === 'money'}>
-            <input type="radio" value="money" {...register('paymentMethod')} />
+          <PaymentOptionItem checked={paymentMethod === 'Dinheiro'}>
+            <input
+              type="radio"
+              value="Dinheiro"
+              {...register('paymentMethod')}
+            />
             <Money size={16} />
             DINHEIRO
           </PaymentOptionItem>

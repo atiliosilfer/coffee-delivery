@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useContext } from 'react'
 import { OrderContext } from '../../contexts/OrderContext'
 import { toast } from 'react-toastify'
+import { EmptyCart } from './components/EmptyCart'
 
 const deliveryFormValidationSchema = zod.object({
   cep: zod
@@ -53,56 +54,60 @@ export function Checkout() {
     })
   }
 
-  console.log(totalOrderValue)
-
   return (
-    <GridContainer
-      onSubmit={handleSubmit(handleConfirmOrder, handleConfirmWithError)}
-    >
-      <FormProvider {...deliveryForm}>
-        <FormDelivery />
-      </FormProvider>
+    <>
+      {cartItens.length === 0 ? (
+        <EmptyCart />
+      ) : (
+        <GridContainer
+          onSubmit={handleSubmit(handleConfirmOrder, handleConfirmWithError)}
+        >
+          <FormProvider {...deliveryForm}>
+            <FormDelivery />
+          </FormProvider>
 
-      <div>
-        <h2>Cafés selecionados</h2>
+          <div>
+            <h2>Cafés selecionados</h2>
 
-        <CardContainer>
-          {cartItens.map((item) => (
-            <CartItem key={item.id} order={item} />
-          ))}
+            <CardContainer>
+              {cartItens.map((item) => (
+                <CartItem key={item.id} order={item} />
+              ))}
 
-          <BillContainer>
-            <div>
-              <span>Total de itens</span>
-              <span>
-                R${' '}
-                {totalOrderValue.toLocaleString('pt-BR', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
-            </div>
+              <BillContainer>
+                <div>
+                  <span>Total de itens</span>
+                  <span>
+                    R${' '}
+                    {totalOrderValue.toLocaleString('pt-BR', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </div>
 
-            <div>
-              <span>Entrega </span>
-              <span>R$ 3,50</span>
-            </div>
+                <div>
+                  <span>Entrega </span>
+                  <span>R$ 3,50</span>
+                </div>
 
-            <div>
-              <span>Total </span>
-              <span>
-                R${' '}
-                {(totalOrderValue + 3.5).toLocaleString('pt-BR', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}
-              </span>
-            </div>
+                <div>
+                  <span>Total </span>
+                  <span>
+                    R${' '}
+                    {(totalOrderValue + 3.5).toLocaleString('pt-BR', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </span>
+                </div>
 
-            <button type="submit">CONFIRMAR PEDIDO</button>
-          </BillContainer>
-        </CardContainer>
-      </div>
-    </GridContainer>
+                <button type="submit">CONFIRMAR PEDIDO</button>
+              </BillContainer>
+            </CardContainer>
+          </div>
+        </GridContainer>
+      )}
+    </>
   )
 }

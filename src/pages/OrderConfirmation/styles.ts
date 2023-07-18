@@ -21,8 +21,13 @@ export const OrderConfirmationContainer = styled.div`
     -webkit-box-align: center;
     align-items: center;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1020px) {
       grid-template-columns: 1fr;
+
+      img {
+        width: 80%;
+        margin: auto;
+      }
     }
   }
 `

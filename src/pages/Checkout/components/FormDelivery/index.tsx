@@ -16,10 +16,13 @@ import {
   PaymentOptionItem,
 } from './styles'
 import { useFormContext } from 'react-hook-form'
+import { useContext } from 'react'
+import { OrderContext } from '../../../../contexts/OrderContext'
 
 export function FormDelivery() {
   const { register, watch } = useFormContext()
   const paymentMethod = watch('paymentMethod')
+  const { deliveryData } = useContext(OrderContext)
 
   return (
     <div>
@@ -42,6 +45,7 @@ export function FormDelivery() {
               type="text"
               placeholder="CEP"
               required
+              defaultValue={deliveryData.cep}
               {...register('cep')}
             />
           </FormGridItem>

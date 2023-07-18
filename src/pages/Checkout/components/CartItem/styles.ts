@@ -8,6 +8,7 @@ export const CardItemContainer = styled.div`
   border-bottom: solid 1px ${(props) => props.theme['base-button']};
   padding-bottom: 1.5rem;
   margin-bottom: 1.5rem;
+  margin-right: 0.5rem;
 
   img {
     width: 4rem;

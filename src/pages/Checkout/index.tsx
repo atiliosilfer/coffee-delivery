@@ -70,9 +70,11 @@ export function Checkout() {
             <h2>Cafés selecionados</h2>
 
             <CardContainer>
-              {cartItens.map((item) => (
-                <CartItem key={item.id} order={item} />
-              ))}
+              <div>
+                {cartItens.map((item) => (
+                  <CartItem key={item.id} order={item} />
+                ))}
+              </div>
 
               <BillContainer>
                 <div>

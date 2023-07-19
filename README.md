@@ -5,6 +5,7 @@ Esse é um projeto de estudos, desenvolvido totalmente do zero a partir de um pr
 link: https://coffee-delivery-atiliosilfer.vercel.app/
 
 ### Conceitos estudados durante esse projeto:
+ - React
  - HTML & CSS;
  - Typescript; 
  - CSS-in-JS framework (styled-components);

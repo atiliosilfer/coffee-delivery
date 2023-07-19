@@ -10,9 +10,9 @@ import { useContext } from 'react'
 import { OrderContext } from '../../contexts/OrderContext'
 
 export function OrderConfirmation() {
-  const { deliveryData } = useContext(OrderContext)
+  const { deliveryFormData } = useContext(OrderContext)
   const { street, adressNumber, neighborhood, city, uf, paymentMethod } =
-    deliveryData
+    deliveryFormData
 
   return (
     <OrderConfirmationContainer>

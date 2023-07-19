@@ -22,7 +22,7 @@ import { OrderContext } from '../../../../contexts/OrderContext'
 export function FormDelivery() {
   const { register, watch } = useFormContext()
   const paymentMethod = watch('paymentMethod')
-  const { deliveryData } = useContext(OrderContext)
+  const { deliveryFormData } = useContext(OrderContext)
 
   return (
     <div>
@@ -45,7 +45,7 @@ export function FormDelivery() {
               type="text"
               placeholder="CEP"
               required
-              defaultValue={deliveryData.cep}
+              defaultValue={deliveryFormData.cep}
               {...register('cep')}
             />
           </FormGridItem>

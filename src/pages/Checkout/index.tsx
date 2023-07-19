@@ -38,14 +38,14 @@ export function Checkout() {
   const {
     cartItens,
     totalOrderValue,
-    updateDeliveryData,
-    deliveryData,
+    updateDeliveryFormData,
+    deliveryFormData,
     clearCart,
   } = useContext(OrderContext)
 
   const deliveryForm = useForm<DeliveryFormData>({
     resolver: zodResolver(deliveryFormValidationSchema),
-    defaultValues: deliveryData,
+    defaultValues: deliveryFormData,
   })
 
   const navigate = useNavigate()
@@ -56,7 +56,7 @@ export function Checkout() {
   } = deliveryForm
 
   function handleConfirmOrder(data: DeliveryFormData) {
-    updateDeliveryData(data)
+    updateDeliveryFormData(data)
     clearCart()
     navigate('/success')
   }
